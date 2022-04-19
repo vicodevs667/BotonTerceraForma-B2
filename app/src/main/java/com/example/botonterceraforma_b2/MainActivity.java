@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     //Atributos
@@ -14,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText etPalabra;
     private Button btnInvertir, btnMensaje;
 
-    private String palabra;
+    private String palabra, invertido;
 
     //Metodos
     @Override
@@ -36,11 +39,24 @@ public class MainActivity extends AppCompatActivity {
         //3era forma la funcion anonima se activa de forma local
         //solamente para el boton en cuestion
         btnInvertir.setOnClickListener(new View.OnClickListener() {
+            //Este click solo es reconocido por el boton que lo esta implementando
+            //este onClick solo existe para btnInvertir
             @Override
             public void onClick(View view) {
                 obtenerInformacion();
+                invertirPalabra();
             }
         });// esperando una funcion anonima como parametro
+        //La forma chevere 2019 and up
+        // Lambda Functions
+        /*
+        La version del boton anterior pero usando lambda functions
+        btnInvertir.setOnClickListener(view -> { obtenerInformacion();
+            invertirPalabra();
+        });
+        */
+        btnMensaje.setOnClickListener(view -> mostrarMensaje());
+
     }
 
     private void inicializarVistas() {
@@ -51,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtenerInformacion() {
-        palabra = etPalabra.getText().toString();
+        palabra = etPalabra.getText().toString().toLowerCase();
     }
 
     private void invertirPalabra() {
         // separar palabras - array
-        String invertido = "";
+        invertido = "";
         /*
          En Java existe una funcion o metodo que les permite
          analizar una cadena como un vector, cada letra de la
@@ -72,6 +88,31 @@ public class MainActivity extends AppCompatActivity {
             invertido = invertido + palabra.charAt(i);
         }
         txtResultado.setText(invertido);
+    }
+
+    private String evaluarPalabra() {
+        String mensaje = "No es palindromo";
+        if(palabra.equals(invertido)) {
+            mensaje = "Es palindromo";
+        }
+        return mensaje;
+    }
+
+    private void mostrarMensaje() {
+        //La ventana pequeña emergente se llama Toast
+        //es temporal, sirve para mostrar información o algo que quieres
+        //que el usuario vea
+        /*
+            El Toast necesita configurar 3 parametros:
+                -Contexto de la ventana: necesita saber el ambito de
+                    la pantalla donde se va a dibujar esta ventana.
+                -Una cadena que es lo que mostrará en la ventana.
+                -Tiempo de duración de la ventana: que ya existen constantes
+                    que tienen configurados esos valores
+            para mostrar la ventana usan un metodo para desplegarla
+            llamado .show()
+         */
+        Toast.makeText(this, evaluarPalabra(), Toast.LENGTH_LONG).show();
     }
 }
 
