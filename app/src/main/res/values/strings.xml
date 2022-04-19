@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">BotonTerceraForma-B2</string>
+    <string name="hint_palabra">Escribe tu Palabra:</string>
+    <string name="btn_invertir">INVERTIR</string>
+    <string name="btn_mensaje">Mensaje</string>
+</resources>
